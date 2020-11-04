@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://HUD/HUD.gd" type="Script" id=1]
+[ext_resource path="res://HUD/Menu.gd" type="Script" id=2]
 
 [node name="UI" type="CanvasLayer"]
 
@@ -44,3 +45,56 @@ margin_bottom = 20.0
 text = "Health"
 align = 1
 valign = 1
+
+[node name="Menu" type="Control" parent="."]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.1748
+margin_top = 1.5874
+margin_right = 3.1748
+margin_bottom = 1.5874
+color = Color( 0, 0, 0, 0.521569 )
+
+[node name="Label" type="Label" parent="Menu"]
+margin_left = 442.787
+margin_top = 59.1716
+margin_right = 574.787
+margin_bottom = 98.1716
+text = "Save and Load"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="Menu"]
+margin_left = 462.0
+margin_top = 300.0
+margin_right = 562.0
+margin_bottom = 340.0
+text = "Save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Load" type="Button" parent="Menu"]
+margin_left = 462.0
+margin_top = 400.0
+margin_right = 562.0
+margin_bottom = 440.0
+text = "Load"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Menu/Save" to="Menu" method="_on_Save_pressed"]
+[connection signal="pressed" from="Menu/Load" to="Menu" method="_on_Load_pressed"]

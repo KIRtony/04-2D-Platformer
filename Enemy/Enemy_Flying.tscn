@@ -3,10 +3,12 @@
 [ext_resource path="res://Enemy/Enemy_Flying.gd" type="Script" id=1]
 [ext_resource path="res://Assets/enemy1.png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=17]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 26.2893, 33.5256 )
 
-[node name="Enemy_Flying" type="KinematicBody2D"]
+[node name="Enemy_Flying" type="KinematicBody2D" groups=[
+"Enemy_Flying",
+]]
 position = Vector2( 1129.02, 131.554 )
 script = ExtResource( 1 )
 
@@ -22,5 +24,5 @@ enabled = true
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 17 )
+shape = SubResource( 1 )
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

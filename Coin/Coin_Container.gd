@@ -1,16 +1,11 @@
 extends Node2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var Coin = load("res//Coin/Coin.tscn")
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func spawn(attr,p):
+	var coin = Coin.instance()
+	for a in attr:
+		coin[a] = attr[a]
+	coin.position = p
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

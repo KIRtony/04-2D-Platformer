@@ -1,16 +1,17 @@
 extends Node2D
 
+onready var Enemy_Ground = load("res://Enemy/Enemy_Ground.tscn")
+onready var Enemy_Flying = load("res://Enemy/Enemy_Flying.tscn")
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+func spawn(e_type, attr, p):
+	var enemy = null
+	if e_type == "Enemy_Ground":
+		enemy = Enemy_Ground.instance()
+	if e_type == "Enemy_Flying":
+		enemy = Enemy_Flying.instance()
+	for a in attr:
+		enemy[a] = attr[a]
+	enemy.position = p
+	add_child(enemy)		
+	
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

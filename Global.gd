@@ -7,8 +7,30 @@ var level = 1
 var max_health = 100
 var health = 100
 
-func _ready():
-	pass 
+var saves = [
+	"user://game-data_0.json"
+	
+	
+]
+
+
+
+func _ready( ):
+	pause_mode = Node.PAUSE_MODE_PROCESS
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("Menu"):
+		var menu = get_node_or_null("/root/Game/UI/Menu")
+		if menu != null:
+			var p = get_tree().paused
+			if p:
+				menu.hide()
+				get_tree().paused = false
+			else:
+				menu.show()
+				get_tree().paused = true
+			
 
 func increase_score(s):
 	score += s
@@ -20,4 +42,63 @@ func decrease_lives(l):
 	lives -= l
 	health = max_health
 	if lives <= 0:
+
 		get_tree().change_scene("res://Levels/Game_Over.tscn")
+
+func get_save_data( ):
+	var data = {
+		"score" :score
+		,"lives" :lives
+		,"health" :health
+		,"level" :level
+		,"player":"" 
+		,"enemy_ground":[] 
+		,"enemy_flying":[]
+		,"coins":[ ]
+	}
+	var player = get_node_or_null("/root/Game/Player.Container/Player" ) 
+	if player!= null:
+		data["player"] = var2str(player.position)
+	var enemies = get_node("/root/Game/Enemy_Container").get_children() 
+	for e in enemies:
+		if e.is_in_group("Enemy_ Ground"):
+			var temp = {"position":e.position,"max_constraint":e.max_constraint,"min_constraint" :e.min_constraint}
+			data["enemy_ground"].append(temp)
+		if e.is_in_group("Enemy_Flying"):
+			var temp = {"position" :e.position}
+			data["enemy_flying"].append(temp )
+	var coins = get_node("/root/Game/Coin_ Container").get_children( )
+	for C in coins:
+		var temp = {"position" :C.position,"score":C.score}
+		data["coin"].append(temp)
+	print(data)
+	return(data)
+	
+func load_save_data(data):
+	pass
+	
+	
+	
+
+
+		
+func save_game(which_file):
+	var file = File.new( )
+	var data = {}
+	file.open(saves[which_file],File.WRITE)
+	file.store_string(to_json(data))
+	file.close( )
+
+func load_game(which_file):
+	var file = File.new( )
+	if file.file_exists(saves[which_file]):
+		file.open(saves[which_file],File.READ )
+		var data = parse_json(file.get.as_ext( ))
+		file.close( )
+		if typeof(data) == TYPE_DICTIONARY:
+			pass
+		else:
+			printerr("Corrupted data")
+	else:
+		printerr("No saved data")
+
